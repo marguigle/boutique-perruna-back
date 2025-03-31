@@ -6,7 +6,12 @@ import dogRoutes from "./routes/dogRoutes.js";
 dotenv.config();
 dbConnection();
 const app = express();
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:5173", // Asegúrate de que esta URL sea la de tu frontend
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Bienvenido al Backend de BP");

@@ -1,8 +1,10 @@
 import Dog from "../models/dogModel.js";
 
 export const addDog = async (req, res) => {
+  const { name, race, owner, age, image } = req.body;
+  console.log("Datos recibidos en el backend:", req.body);
   try {
-    const newDog = new Dog(req.body);
+    const newDog = new Dog({ name, race, owner, age, image });
     await newDog.save();
     res.status(201).json({
       message: "el perro fue agregado correctamente a la base de datos",
