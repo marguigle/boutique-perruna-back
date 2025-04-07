@@ -1,10 +1,20 @@
 import Dog from "../models/dogModel.js";
 
 export const addDog = async (req, res) => {
-  const { name, race, owner, age, image } = req.body;
+  const { name, race, owner, age, image, vacunado, antiparasitario, castrado } =
+    req.body;
   console.log("Datos recibidos en el backend:", req.body);
   try {
-    const newDog = new Dog({ name, race, owner, age, image });
+    const newDog = new Dog({
+      name,
+      race,
+      owner,
+      age,
+      image,
+      vacunado,
+      antiparasitario,
+      castrado,
+    });
     await newDog.save();
     res.status(201).json({
       message: "el perro fue agregado correctamente a la base de datos",
@@ -68,26 +78,55 @@ export const deleteDog = async (req, res) => {
     });
   }
 };
+// export const updateDog = async (req, res) => {
+//   const { id } = req.params;
+//   const (dogData)=req.body
+
+//   try {
+//     if (!id) {
+//       return res.status(400).json({ message: "El ID es requerido" });
+//     }
+//     const updatedDog = await Dog.findByIdAndUpdate(id, req.body, { new: true });
+//     if (!updatedDog) {
+//       return res.status(404).json({ message: "Perro no encontrado" });
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Loa datos del perro seleccionado se actualizaron con éxito!",
+//       dog: updatedDog,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       message: "no se ha encontrado el perro que busca",
+//       error: error.message,
+//     });
+//   }
+// };
+
 export const updateDog = async (req, res) => {
   const { id } = req.params;
+  const dogData = req.body;
 
   try {
     if (!id) {
       return res.status(400).json({ message: "El ID es requerido" });
     }
-    const updatedDog = await Dog.findByIdAndUpdate(id, req.body, { new: true });
+
+    const updatedDog = await Dog.findByIdAndUpdate(id, dogData, { new: true });
+
     if (!updatedDog) {
       return res.status(404).json({ message: "Perro no encontrado" });
     }
 
     res.status(200).json({
       success: true,
-      message: "Loa datos del perro seleccionado se actualizaron con éxito!",
-      dog: updatedDog,
+      message: "Los datos del perro seleccionado se actualizaron con éxito!",
+      newDog: updatedDog, // para que coincida con lo que espera el frontend
     });
   } catch (error) {
     res.status(500).json({
-      message: "no se ha encontrado el perro que busca",
+      message: "No se ha podido actualizar el perro",
       error: error.message,
     });
   }

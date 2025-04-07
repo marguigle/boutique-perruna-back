@@ -19,6 +19,18 @@ const dogSchema = new mongoose.Schema(
     image: {
       type: String,
     },
+
+    vacunado: {
+      type: Boolean,
+    },
+
+    antiparasitario: {
+      type: Boolean,
+    },
+
+    castrado: {
+      type: Boolean,
+    },
   },
   { timestamps: true }
 );

@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import dbConnection from "./dbConfig.js";
 import dogRoutes from "./routes/dogRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
+
 dotenv.config();
 dbConnection();
 const app = express();
@@ -17,6 +19,8 @@ app.get("/", (req, res) => {
   res.send("Bienvenido al Backend de BP");
 });
 app.use("/api/dogs", dogRoutes);
+app.use("/api", uploadRoutes);
+
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
